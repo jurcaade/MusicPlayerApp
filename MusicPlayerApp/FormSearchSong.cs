@@ -23,8 +23,16 @@ namespace MusicPlayerApp
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             string keyword = textBoxSearch.Text.ToLower();
-            listBoxResults.Items.Clear();
+           
+            //Validare camp gol
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                MessageBox.Show("Introduceți un cuvânt cheie pentru căutare!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBoxSearch.Focus();
+                return;
+            }
 
+            listBoxResults.Items.Clear();
             foreach (var song in songs)
             {
                 if (song.Title.ToLower().Contains(keyword) || song.Artist.ToLower().Contains(keyword))
@@ -35,8 +43,9 @@ namespace MusicPlayerApp
 
             if (listBoxResults.Items.Count == 0)
             {
-                MessageBox.Show("Nicio melodie găsită.");
+                MessageBox.Show($"Nu s-au găsit rezultate pentru '{textBoxSearch.Text}'", "Căutare", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+           
         }
     }
 }

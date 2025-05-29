@@ -31,7 +31,7 @@ namespace MusicPlayerApp
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("Fișierul songs.xml nu a fost găsit!");
+                MessageBox.Show("Fișierul songs.xml nu a fost găsit!","Eroare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -56,12 +56,16 @@ namespace MusicPlayerApp
 
         private void btnAdaugaPiesa_Click(object sender, EventArgs e)
         {
-            FormAddSong addSongForm = new FormAddSong();
-            addSongForm.ShowDialog();
-            var newSong = new Song(addSongForm.SongTitle, addSongForm.SongArtist);
-            songs.Add(newSong);
-            RefreshDataGrid();
-            SaveSongsToFile();
+            using (FormAddSong addSongForm = new FormAddSong())
+            {
+                if (addSongForm.ShowDialog() == DialogResult.OK)
+                {
+                    var newSong = new Song(addSongForm.SongTitle, addSongForm.SongArtist);
+                    songs.Add(newSong);
+                    RefreshDataGrid();
+                    SaveSongsToFile();
+                }
+            }
         }
 
         private void btnStergePiesa_Click(object sender, EventArgs e)
@@ -75,7 +79,7 @@ namespace MusicPlayerApp
             }
             else
             {
-                MessageBox.Show("Selectați o melodie pentru a o șterge.");
+                MessageBox.Show("Selectați o melodie pentru a o șterge.","Informare",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -121,7 +125,7 @@ namespace MusicPlayerApp
             }
             else
             {
-                MessageBox.Show("Selectați o melodie pentru a o edita.");
+                MessageBox.Show("Selectați o melodie pentru a o edita.","Informare",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
@@ -137,7 +141,7 @@ namespace MusicPlayerApp
 
             if (dataGridViewSongs.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Selectează o melodie din listă.");
+                MessageBox.Show("Selectează o melodie din listă.", "Informare", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -152,7 +156,7 @@ namespace MusicPlayerApp
 
             currentPlayer = new SoundPlayer(wavFilePath);
             currentPlayer.Play();
-            lblNowPlaying.Text = $"Now Playing: {selectedSong.Title} - {selectedSong.Artist}";
+            lblNowPlaying.Text = $"♪ Now Playing: {selectedSong.Title} - {selectedSong.Artist}";
         }
 
 
@@ -171,7 +175,7 @@ namespace MusicPlayerApp
             }
             else
             {
-                MessageBox.Show("Nu este nicio melodie în redare.");
+                MessageBox.Show("Nu este nicio melodie în redare.","Informare", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

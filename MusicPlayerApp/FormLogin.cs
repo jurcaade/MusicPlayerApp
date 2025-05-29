@@ -21,13 +21,12 @@ namespace MusicPlayerApp
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Te rog să introduci numele de utilizator și parola.");
+                MessageBox.Show($"Introdu numele de utilizator și parola.","Informare",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 return;
             }
 
             if (CheckLogin(username, password))
             {
-                MessageBox.Show("Autentificare reușită!");
                 this.Hide();
                 FormMain mainForm = new FormMain();
                 mainForm.ShowDialog();
@@ -35,7 +34,7 @@ namespace MusicPlayerApp
             }
             else
             {
-                MessageBox.Show("Nume de utilizator sau parolă greșită!");
+                MessageBox.Show($"Nume de utilizator sau parolă greșită!","Eroare",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             }
 
         }
@@ -45,7 +44,7 @@ namespace MusicPlayerApp
 
             if (!File.Exists(filePath))
             {
-                MessageBox.Show("Fișierul users.xml nu a fost găsit!");
+                MessageBox.Show($"Fișierul users.xml nu a fost găsit!","Eroare",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return false;
             }
 
@@ -61,7 +60,7 @@ namespace MusicPlayerApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Eroare la citirea fișierului XML: {ex.Message}");
+                MessageBox.Show($"Eroare la citirea fișierului XML: {ex.Message}","Eroare",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return false;
             }
         }

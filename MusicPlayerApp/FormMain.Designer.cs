@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.dataGridViewSongs = new System.Windows.Forms.DataGridView();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.artistDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.songBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnAdaugaPiesa = new System.Windows.Forms.Button();
             this.btnStergePiesa = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -42,9 +39,12 @@
             this.lblNowPlaying = new System.Windows.Forms.Label();
             this.btnPlaySong = new System.Windows.Forms.Button();
             this.btnStopSong = new System.Windows.Forms.Button();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.artistDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.songBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSongs)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.songBindingSource)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.songBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewSongs
@@ -65,28 +65,6 @@
             this.dataGridViewSongs.RowTemplate.Height = 24;
             this.dataGridViewSongs.Size = new System.Drawing.Size(591, 333);
             this.dataGridViewSongs.TabIndex = 0;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
-            this.titleDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            this.titleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.titleDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // artistDataGridViewTextBoxColumn
-            // 
-            this.artistDataGridViewTextBoxColumn.DataPropertyName = "Artist";
-            this.artistDataGridViewTextBoxColumn.HeaderText = "Artist";
-            this.artistDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.artistDataGridViewTextBoxColumn.Name = "artistDataGridViewTextBoxColumn";
-            this.artistDataGridViewTextBoxColumn.ReadOnly = true;
-            this.artistDataGridViewTextBoxColumn.Width = 240;
-            // 
-            // songBindingSource
-            // 
-            this.songBindingSource.DataSource = typeof(MusicPlayerApp.Song);
             // 
             // btnAdaugaPiesa
             // 
@@ -115,14 +93,14 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(142)))), ((int)(((byte)(105)))));
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(185)))), ((int)(((byte)(247)))));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.searchSongToolStripMenuItem,
             this.editSongToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(919, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(919, 28);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -132,7 +110,7 @@
             this.searchSongToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.searchSongToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.searchSongToolStripMenuItem.Name = "searchSongToolStripMenuItem";
-            this.searchSongToolStripMenuItem.Size = new System.Drawing.Size(117, 23);
+            this.searchSongToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
             this.searchSongToolStripMenuItem.Text = "Search Song";
             this.searchSongToolStripMenuItem.Click += new System.EventHandler(this.searchSongToolStripMenuItem_Click);
             // 
@@ -141,7 +119,7 @@
             this.editSongToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(161)))), ((int)(((byte)(242)))));
             this.editSongToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.editSongToolStripMenuItem.Name = "editSongToolStripMenuItem";
-            this.editSongToolStripMenuItem.Size = new System.Drawing.Size(95, 23);
+            this.editSongToolStripMenuItem.Size = new System.Drawing.Size(95, 24);
             this.editSongToolStripMenuItem.Text = "Edit Song";
             this.editSongToolStripMenuItem.Click += new System.EventHandler(this.editSongToolStripMenuItem_Click);
             // 
@@ -182,6 +160,28 @@
             this.btnStopSong.UseVisualStyleBackColor = false;
             this.btnStopSong.Click += new System.EventHandler(this.btnStopSong_Click);
             // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
+            this.titleDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            this.titleDataGridViewTextBoxColumn.ReadOnly = true;
+            this.titleDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // artistDataGridViewTextBoxColumn
+            // 
+            this.artistDataGridViewTextBoxColumn.DataPropertyName = "Artist";
+            this.artistDataGridViewTextBoxColumn.HeaderText = "Artist";
+            this.artistDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.artistDataGridViewTextBoxColumn.Name = "artistDataGridViewTextBoxColumn";
+            this.artistDataGridViewTextBoxColumn.ReadOnly = true;
+            this.artistDataGridViewTextBoxColumn.Width = 240;
+            // 
+            // songBindingSource
+            // 
+            this.songBindingSource.DataSource = typeof(MusicPlayerApp.Song);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -203,9 +203,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Music Player App";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewSongs)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.songBindingSource)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.songBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

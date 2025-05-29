@@ -27,9 +27,31 @@ namespace MusicPlayerApp
             UpdatedTitle = textBoxEditedTitle.Text.Trim();
             UpdatedArtist = textBoxEditedArtist.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(UpdatedTitle) || string.IsNullOrWhiteSpace(UpdatedArtist))
+            //Valiari campuri goale
+            if (string.IsNullOrWhiteSpace(UpdatedTitle))
             {
-                MessageBox.Show("Completează toate câmpurile.");
+                MessageBox.Show("Titlul nu poate fi gol!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBoxEditedTitle.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(UpdatedArtist))
+            {
+                MessageBox.Show("Artistul nu poate fi gol!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBoxEditedArtist.Focus();
+                return;
+            }
+
+            // Validare lungime
+            if (UpdatedTitle.Length > 100)
+            {
+                MessageBox.Show("Titlul nu poate depăși 100 de caractere!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (UpdatedArtist.Length > 100)
+            {
+                MessageBox.Show("Numele artistului nu poate depăși 50 de caractere!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

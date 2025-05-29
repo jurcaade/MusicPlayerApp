@@ -20,33 +20,11 @@ namespace MusicPlayerApp
         {
             InitializeComponent();
         }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(textBoxPiesa.Text) || string.IsNullOrWhiteSpace(textBoxArtist.Text))
-            {
-                MessageBox.Show("Toate câmpurile sunt obligatorii!");
-                return;
-            }
-
-            SongTitle = textBoxPiesa.Text.Trim();
-            SongArtist = textBoxArtist.Text.Trim();
-
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
         private void buttonOk_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(textBoxPiesa.Text) || string.IsNullOrWhiteSpace(textBoxArtist.Text))
             {
-                MessageBox.Show("Toate câmpurile sunt obligatorii!");
+                MessageBox.Show("Toate câmpurile sunt obligatorii!", "Informare", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -62,7 +40,5 @@ namespace MusicPlayerApp
             DialogResult = DialogResult.Cancel;
             Close();
         }
-
-   
     }
 }
