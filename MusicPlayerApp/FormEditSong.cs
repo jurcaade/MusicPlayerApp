@@ -51,7 +51,7 @@ namespace MusicPlayerApp
 
             if (UpdatedArtist.Length > 100)
             {
-                MessageBox.Show("Numele artistului nu poate depăși 50 de caractere!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Numele artistului nu poate depăși 100 de caractere!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

@@ -81,6 +81,7 @@
     <Compile Include="Song.cs" />
     <EmbeddedResource Include="FormEditSong.resx">
       <DependentUpon>FormEditSong.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
