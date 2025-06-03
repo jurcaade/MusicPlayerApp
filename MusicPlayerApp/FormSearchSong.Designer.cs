@@ -37,6 +37,7 @@
             // textBoxSearch
             // 
             this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSearch.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.textBoxSearch.Location = new System.Drawing.Point(144, 89);
             this.textBoxSearch.Multiline = true;
             this.textBoxSearch.Name = "textBoxSearch";
@@ -46,11 +47,12 @@
             // listBoxResults
             // 
             this.listBoxResults.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.listBoxResults.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.listBoxResults.FormattingEnabled = true;
-            this.listBoxResults.ItemHeight = 16;
+            this.listBoxResults.ItemHeight = 24;
             this.listBoxResults.Location = new System.Drawing.Point(144, 141);
             this.listBoxResults.Name = "listBoxResults";
-            this.listBoxResults.Size = new System.Drawing.Size(485, 228);
+            this.listBoxResults.Size = new System.Drawing.Size(485, 220);
             this.listBoxResults.TabIndex = 1;
             // 
             // buttonSearch

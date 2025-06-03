@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -13,6 +12,8 @@ namespace MusicPlayerApp
     {
         private List<Song> songs; // Lista pentru melodiile incarcate
         private SoundPlayer currentPlayer; // Playerul pentru redarea melodiilor
+        private bool isPlaying = false;
+
         public FormMain()
         {
             InitializeComponent();
@@ -164,13 +165,11 @@ namespace MusicPlayerApp
                 return;
             }
 
-            // Reda fisierul audio folosind SoundPlayer
-            currentPlayer = new SoundPlayer(wavFilePath);
+            currentPlayer = new SoundPlayer(wavFilePath);  // Reda fisierul audio folosind SoundPlayer
             currentPlayer.Play();
-
-            // Afiseaza informatii despre melodia care se reda
-            lblNowPlaying.Text = $"♪ Now Playing: {selectedSong.Title} - {selectedSong.Artist}";
-        }
+            isPlaying = true;
+            lblNowPlaying.Text = $"♪ Now Playing: {selectedSong.Title} - {selectedSong.Artist}";  // Afiseaza informatii despre melodia care se reda
+        } 
         private void btnPlaySong_Click(object sender, EventArgs e)
         {
             PlaySelectedSong();
@@ -178,9 +177,10 @@ namespace MusicPlayerApp
 
         private void btnStopSong_Click(object sender, EventArgs e)
         {
-            if (currentPlayer != null)
+            if (isPlaying)
             {
                 currentPlayer.Stop();
+                isPlaying = false;
                 lblNowPlaying.Text = "Music Player App";
             }
             else

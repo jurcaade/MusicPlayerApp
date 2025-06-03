@@ -39,6 +39,7 @@
             // 
             // textBoxPiesa
             // 
+            this.textBoxPiesa.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxPiesa.Location = new System.Drawing.Point(375, 116);
             this.textBoxPiesa.Multiline = true;
             this.textBoxPiesa.Name = "textBoxPiesa";
@@ -47,6 +48,7 @@
             // 
             // textBoxArtist
             // 
+            this.textBoxArtist.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
             this.textBoxArtist.Location = new System.Drawing.Point(375, 179);
             this.textBoxArtist.Multiline = true;
             this.textBoxArtist.Name = "textBoxArtist";

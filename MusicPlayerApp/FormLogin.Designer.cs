@@ -62,7 +62,7 @@
             // 
             // textBoxUtilizator
             // 
-            this.textBoxUtilizator.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxUtilizator.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold);
             this.textBoxUtilizator.Location = new System.Drawing.Point(353, 110);
             this.textBoxUtilizator.Multiline = true;
             this.textBoxUtilizator.Name = "textBoxUtilizator";
@@ -71,7 +71,7 @@
             // 
             // textBoxParola
             // 
-            this.textBoxParola.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F);
+            this.textBoxParola.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold);
             this.textBoxParola.Location = new System.Drawing.Point(353, 191);
             this.textBoxParola.Multiline = true;
             this.textBoxParola.Name = "textBoxParola";

@@ -43,7 +43,7 @@
             this.labelTitlu.BackColor = System.Drawing.Color.Transparent;
             this.labelTitlu.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold);
             this.labelTitlu.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelTitlu.Location = new System.Drawing.Point(197, 127);
+            this.labelTitlu.Location = new System.Drawing.Point(160, 133);
             this.labelTitlu.Name = "labelTitlu";
             this.labelTitlu.Size = new System.Drawing.Size(115, 27);
             this.labelTitlu.TabIndex = 0;
@@ -55,7 +55,7 @@
             this.labelArtist.BackColor = System.Drawing.Color.Transparent;
             this.labelArtist.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Bold);
             this.labelArtist.ForeColor = System.Drawing.SystemColors.Control;
-            this.labelArtist.Location = new System.Drawing.Point(197, 188);
+            this.labelArtist.Location = new System.Drawing.Point(160, 194);
             this.labelArtist.Name = "labelArtist";
             this.labelArtist.Size = new System.Drawing.Size(125, 27);
             this.labelArtist.TabIndex = 1;
@@ -63,18 +63,20 @@
             // 
             // textBoxEditedTitle
             // 
-            this.textBoxEditedTitle.Location = new System.Drawing.Point(376, 116);
+            this.textBoxEditedTitle.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
+            this.textBoxEditedTitle.Location = new System.Drawing.Point(339, 122);
             this.textBoxEditedTitle.Multiline = true;
             this.textBoxEditedTitle.Name = "textBoxEditedTitle";
-            this.textBoxEditedTitle.Size = new System.Drawing.Size(211, 38);
+            this.textBoxEditedTitle.Size = new System.Drawing.Size(302, 38);
             this.textBoxEditedTitle.TabIndex = 2;
             // 
             // textBoxEditedArtist
             // 
-            this.textBoxEditedArtist.Location = new System.Drawing.Point(376, 177);
+            this.textBoxEditedArtist.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Bold);
+            this.textBoxEditedArtist.Location = new System.Drawing.Point(339, 183);
             this.textBoxEditedArtist.Multiline = true;
             this.textBoxEditedArtist.Name = "textBoxEditedArtist";
-            this.textBoxEditedArtist.Size = new System.Drawing.Size(211, 38);
+            this.textBoxEditedArtist.Size = new System.Drawing.Size(302, 38);
             this.textBoxEditedArtist.TabIndex = 3;
             // 
             // buttonSalvare
