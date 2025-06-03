@@ -116,9 +116,10 @@
             this.Controls.Add(this.textBoxArtist);
             this.Controls.Add(this.textBoxPiesa);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormAddSong";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MusicPlayerSong - Add Song";
+            this.Text = "MusicPlayerApp - Add Song";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -24,7 +24,7 @@ namespace MusicPlayerApp
         {
             string keyword = textBoxSearch.Text.ToLower();
            
-            //Validare camp gol
+            // Validare camp gol
             if (string.IsNullOrWhiteSpace(keyword))
             {
                 MessageBox.Show("Introduceți un cuvânt cheie pentru căutare!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Information);

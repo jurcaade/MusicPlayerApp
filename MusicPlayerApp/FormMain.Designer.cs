@@ -49,6 +49,7 @@
             // 
             // dataGridViewSongs
             // 
+            this.dataGridViewSongs.AllowDrop = true;
             this.dataGridViewSongs.AllowUserToAddRows = false;
             this.dataGridViewSongs.AllowUserToDeleteRows = false;
             this.dataGridViewSongs.AutoGenerateColumns = false;
@@ -59,10 +60,12 @@
             this.artistDataGridViewTextBoxColumn});
             this.dataGridViewSongs.DataSource = this.songBindingSource;
             this.dataGridViewSongs.Location = new System.Drawing.Point(69, 113);
+            this.dataGridViewSongs.MultiSelect = false;
             this.dataGridViewSongs.Name = "dataGridViewSongs";
             this.dataGridViewSongs.ReadOnly = true;
             this.dataGridViewSongs.RowHeadersWidth = 51;
             this.dataGridViewSongs.RowTemplate.Height = 24;
+            this.dataGridViewSongs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewSongs.Size = new System.Drawing.Size(591, 333);
             this.dataGridViewSongs.TabIndex = 0;
             // 
@@ -100,7 +103,7 @@
             this.editSongToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(919, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(919, 30);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -110,7 +113,7 @@
             this.searchSongToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.searchSongToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.searchSongToolStripMenuItem.Name = "searchSongToolStripMenuItem";
-            this.searchSongToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.searchSongToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.searchSongToolStripMenuItem.Text = "Search Song";
             this.searchSongToolStripMenuItem.Click += new System.EventHandler(this.searchSongToolStripMenuItem_Click);
             // 
@@ -119,7 +122,7 @@
             this.editSongToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(161)))), ((int)(((byte)(242)))));
             this.editSongToolStripMenuItem.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold);
             this.editSongToolStripMenuItem.Name = "editSongToolStripMenuItem";
-            this.editSongToolStripMenuItem.Size = new System.Drawing.Size(95, 24);
+            this.editSongToolStripMenuItem.Size = new System.Drawing.Size(95, 26);
             this.editSongToolStripMenuItem.Text = "Edit Song";
             this.editSongToolStripMenuItem.Click += new System.EventHandler(this.editSongToolStripMenuItem_Click);
             // 

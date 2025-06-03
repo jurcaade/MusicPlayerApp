@@ -12,8 +12,8 @@ namespace MusicPlayerApp
 {
     public partial class FormEditSong : Form
     {
-        public string UpdatedTitle { get; private set; }
-        public string UpdatedArtist { get; private set; }
+        public string UpdatedTitle { get; set; }
+        public string UpdatedArtist { get; set; }
 
         public FormEditSong(Song song)
         {
@@ -27,7 +27,7 @@ namespace MusicPlayerApp
             UpdatedTitle = textBoxEditedTitle.Text.Trim();
             UpdatedArtist = textBoxEditedArtist.Text.Trim();
 
-            //Valiari campuri goale
+            // Validari campuri goale
             if (string.IsNullOrWhiteSpace(UpdatedTitle))
             {
                 MessageBox.Show("Titlul nu poate fi gol!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -42,7 +42,7 @@ namespace MusicPlayerApp
                 return;
             }
 
-            // Validare lungime
+            // Validari lungime
             if (UpdatedTitle.Length > 100)
             {
                 MessageBox.Show("Titlul nu poate depăși 100 de caractere!", "Validare", MessageBoxButtons.OK, MessageBoxIcon.Warning);

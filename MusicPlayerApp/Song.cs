@@ -10,11 +10,12 @@ namespace MusicPlayerApp
     {
         public string Title { get; set; }
         public string Artist { get; set; }
-
-        public Song(string title, string artist)
+        public string OriginalFileName { get; set; } 
+        public Song(string title, string artist, string originalFileName = null)
         {
             Title = title;
             Artist = artist;
+            OriginalFileName = originalFileName ?? $"{title} - {artist}";
         }
 
         public override string ToString()

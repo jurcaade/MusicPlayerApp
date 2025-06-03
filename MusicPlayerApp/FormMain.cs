@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 namespace MusicPlayerApp
 {
     public partial class FormMain : Form
     {
-        private List<Song> songs;
-        private SoundPlayer currentPlayer;
+        private List<Song> songs; // Lista pentru melodiile incarcate
+        private SoundPlayer currentPlayer; // Playerul pentru redarea melodiilor
         public FormMain()
         {
             InitializeComponent();
             songs = new List<Song>();
             LoadSongs();
 
-            // Enable drag & drop pentru form
-            this.AllowDrop = true;
-            this.DragEnter += FormMain_DragEnter;
-            this.DragDrop += FormMain_DragDrop;
-
-            dataGridViewSongs.AllowDrop = true;
+            // Atasam evenimentele pentru drag & drop pe DataGridView
             dataGridViewSongs.DragEnter += DataGridView_DragEnter;
             dataGridViewSongs.DragDrop += DataGridView_DragDrop;
         }
 
+        // Functie pentru incarcarea melodiilor din fisier
         private void LoadSongs()
         {
             string filePath = "songs.xml";
@@ -44,10 +37,10 @@ namespace MusicPlayerApp
 
             try
             {
-                songs.Clear();
-                XDocument doc = XDocument.Load(filePath);
+                songs.Clear(); // Golim lista curenta
+                XDocument doc = XDocument.Load(filePath);   // Incarcam fisierul XML
 
-                songs = doc.Descendants("Song").Select(s => new Song(s.Element("Title")?.Value.Trim(), s.Element("Artist")?.Value.Trim())).ToList();
+                songs = doc.Descendants("Song").Select(s => new Song(s.Element("Title")?.Value.Trim(), s.Element("Artist")?.Value.Trim(), s.Element("OriginalFileName")?.Value?.Trim())).ToList();
                 RefreshDataGrid();
             }
             catch (Exception ex)
@@ -55,6 +48,7 @@ namespace MusicPlayerApp
                 MessageBox.Show($"Eroare la citirea fișierului XML: {ex.Message}");
             }
         }
+        // Functie pentru actualizarea afisarii in DataGridView
         private void RefreshDataGrid()
         {
             dataGridViewSongs.DataSource = null;
@@ -63,11 +57,13 @@ namespace MusicPlayerApp
 
         private void btnAdaugaPiesa_Click(object sender, EventArgs e)
         {
+            // Creaza o instanta a formularului pentru adaugarea unei piese
             using (FormAddSong addSongForm = new FormAddSong())
             {
+                // Afiseaza formularul ca dialog modal si asteapta raspunsul utilizatorului
                 if (addSongForm.ShowDialog() == DialogResult.OK)
                 {
-                    var newSong = new Song(addSongForm.SongTitle, addSongForm.SongArtist);
+                    var newSong = new Song(addSongForm.SongTitle, addSongForm.SongArtist, $"{addSongForm.SongTitle} - {addSongForm.SongArtist}");
                     songs.Add(newSong);
                     RefreshDataGrid();
                     SaveSongsToFile();
@@ -77,9 +73,11 @@ namespace MusicPlayerApp
 
         private void btnStergePiesa_Click(object sender, EventArgs e)
         {
-            if (dataGridViewSongs.SelectedRows.Count > 0)
+            // Verifica daca exista un rand selectat in DataGridView
+            if (dataGridViewSongs.CurrentRow != null)
             {
-                var selectedIndex = dataGridViewSongs.SelectedRows[0].Index;
+
+                var selectedIndex = dataGridViewSongs.CurrentRow.Index; // Obtine indexul randului selectat
                 songs.RemoveAt(selectedIndex);
                 RefreshDataGrid();
                 SaveSongsToFile();
@@ -92,34 +90,38 @@ namespace MusicPlayerApp
 
         private void SaveSongsToFile()
         {
-            string filePath = "songs.xml";
+            string filePath = "songs.xml";  // Specifica calea fisierului XML
 
+            // Creeaza un document XML cu elementul radacina "Songs"
             XDocument doc = new XDocument(
                 new XElement("Songs",
+                    // Pentru fiecare melodie din lista, creeaza un element "Song"
                     songs.Select(song =>
                         new XElement("Song",
                             new XElement("Title", song.Title),
-                            new XElement("Artist", song.Artist)
+                            new XElement("Artist", song.Artist),
+                            new XElement("OriginalFileName", song.OriginalFileName)
                         )
                     )
                 )
             );
 
-            doc.Save(filePath);
+            doc.Save(filePath);  // Salveaza documentul XML in fisier
         }
 
         private void searchSongToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Creeaza o instanta a formularului de cautare, trimitand lista de melodii ca parametru
             FormSearchSong searchForm = new FormSearchSong(songs);
             searchForm.ShowDialog();
         }
 
         private void editSongToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (dataGridViewSongs.SelectedRows.Count > 0)
+            if (dataGridViewSongs.CurrentRow != null)
             {
-                int selectedIndex = dataGridViewSongs.SelectedRows[0].Index;
-                Song selectedSong = songs[selectedIndex];
+                int selectedIndex = dataGridViewSongs.CurrentRow.Index;  // Obtine indexul randului curent
+                Song selectedSong = songs[selectedIndex];  // Obtine obiectul Song asociat randului curent
 
                 FormEditSong editForm = new FormEditSong(selectedSong);
                 if (editForm.ShowDialog() == DialogResult.OK)
@@ -135,39 +137,40 @@ namespace MusicPlayerApp
                 MessageBox.Show("Selectați o melodie pentru a o edita.", "Informare", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-
-
         private void PlaySelectedSong()
         {
+            // Opreste si elibereaza orice melodie care este deja in redare
             if (currentPlayer != null)
             {
                 currentPlayer.Stop();
                 currentPlayer.Dispose();
             }
 
-            if (dataGridViewSongs.SelectedRows.Count == 0)
+            // Verifica daca este selectata o melodie
+            if (dataGridViewSongs.CurrentRow == null)
             {
                 MessageBox.Show("Selectează o melodie din listă.", "Informare", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var selectedSong = songs[dataGridViewSongs.SelectedRows[0].Index];
-            string wavFilePath = Path.Combine(Application.StartupPath, "Music", $"{selectedSong.Title} - {selectedSong.Artist}.wav");
+            var selectedSong = songs[dataGridViewSongs.CurrentRow.Index];
+            // Creeaza calea catre fisierul .wav corespunzator
+            string wavFilePath = Path.Combine(Application.StartupPath, "Music", $"{selectedSong.OriginalFileName}.wav");
 
+            // Verifica daca fisierul audio exista
             if (!File.Exists(wavFilePath))
             {
                 MessageBox.Show($"Fișierul audio nu a fost găsit:\n{wavFilePath}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Reda fisierul audio folosind SoundPlayer
             currentPlayer = new SoundPlayer(wavFilePath);
             currentPlayer.Play();
+
+            // Afiseaza informatii despre melodia care se reda
             lblNowPlaying.Text = $"♪ Now Playing: {selectedSong.Title} - {selectedSong.Artist}";
         }
-
-
-
         private void btnPlaySong_Click(object sender, EventArgs e)
         {
             PlaySelectedSong();
@@ -186,133 +189,52 @@ namespace MusicPlayerApp
             }
         }
 
-        private void FormMain_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-                bool hasAudioFiles = files.Any(f => Path.GetExtension(f).Equals(".wav", StringComparison.OrdinalIgnoreCase));
-
-                e.Effect = hasAudioFiles ? DragDropEffects.Copy : DragDropEffects.None;
-            }
-        }
-
-        private void FormMain_DragDrop(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
-
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-            foreach (string file in files)
-            {
-                if (Path.GetExtension(file).Equals(".wav", StringComparison.OrdinalIgnoreCase))
-                {
-                    AddSongFromFile(file);
-                }
-            }
-        }
-
         private void DataGridView_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(DataGridViewRow)))
-            {
-                e.Effect = DragDropEffects.Move; // Permite reordonarea în DataGridView
-            }
-            else
-            {
-                FormMain_DragEnter(sender, e); // Permite drop de fișiere .wav
-            }
+            // Daca se trag fisiere peste DataGridView, permite efectul de copiere
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
         }
 
         private void DataGridView_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(DataGridViewRow)))
+            // Daca exista fisiere drop-uite
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                Point clientPoint = dataGridViewSongs.PointToClient(new Point(e.X, e.Y));
-                int targetRowIndex = dataGridViewSongs.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
-
-                if (targetRowIndex >= 0 && dataGridViewSongs.SelectedRows.Count > 0)
-                {
-                    int sourceRowIndex = dataGridViewSongs.SelectedRows[0].Index;
-                    ReorderSongs(sourceRowIndex, targetRowIndex);
-                }
-            }
-            else
-            {
-                FormMain_DragDrop(sender, e);
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);  // Preia lista de fisiere drop-uite
+                foreach (var file in files.Where(f => f.EndsWith(".wav")))   // Pentru fiecare fisier care are extensia .wav il adauga in aplicatie
+                    AddSongFromFile(file);
             }
         }
 
         private void AddSongFromFile(string filePath)
         {
-            try
+            var fileName = Path.GetFileNameWithoutExtension(filePath);  // Obtine numele fisierului fara extensie
+            var destPath = Path.Combine(Application.StartupPath, "Music", Path.GetFileName(filePath));  // Creeaza calea destinatiei in folderul "Music"
+
+            // Copiaza fisierul daca nu exista deja in folderul "Music"
+            if (!File.Exists(destPath))
+                File.Copy(filePath, destPath);
+
+            // Imparte numele fisierului dupa caracterul '-' pentru a obtine titlul si artistul
+            var parts = fileName.Split('-');
+            var title = parts[0].Trim();
+            var artist = parts.Length > 1 ? parts[1].Trim() : "Unknown Artist";
+
+            // Verifica daca melodia exista deja in lista
+            if (!songs.Any(s => s.OriginalFileName.Equals(fileName, StringComparison.OrdinalIgnoreCase)))
             {
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
-                string musicFolder = Path.Combine(Application.StartupPath, "Music");
-
-                if (!Directory.Exists(musicFolder))
-                    Directory.CreateDirectory(musicFolder);
-
-                string destPath = Path.Combine(musicFolder, Path.GetFileName(filePath));
-                if (!File.Exists(destPath))
-                    File.Copy(filePath, destPath);
-
-                // Presupunem formatul "Titlu - Artist.wav"
-                string[] separators = new[] { " - ", "-", "_" };
-                string[] parts = fileName.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-
-                string title = parts.Length > 0 ? parts[0].Trim() : fileName;
-                string artist = parts.Length > 1 ? parts[1].Trim() : "Unknown Artist";
-
-                bool exists = songs.Any(s =>
-                    string.Equals(s.Title, title, StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(s.Artist, artist, StringComparison.OrdinalIgnoreCase));
-
-                if (!exists)
-                {
-                    songs.Add(new Song(title, artist));
-                    RefreshDataGrid();
-                    SaveSongsToFile();
-
-                    MessageBox.Show($"Melodia '{title}' a fost adăugată cu succes!",
-                                    "Drag & Drop", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show($"Melodia '{title}' există deja în listă!",
-                                    "Drag & Drop", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                // Adauga melodia in lista si actualizeaza afisarea si fisierul
+                songs.Add(new Song(title, artist, fileName));
+                RefreshDataGrid();
+                SaveSongsToFile();
+                MessageBox.Show($"Piesa '{title} - {artist}' a fost adăugată cu succes!", "Success",MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Eroare la adăugarea fișierului: {ex.Message}",
-                                "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void ReorderSongs(int sourceIndex, int targetIndex)
-        {
-            if (sourceIndex == targetIndex ||
-                sourceIndex < 0 || targetIndex < 0 ||
-                sourceIndex >= songs.Count || targetIndex >= songs.Count)
-            {
-                return;
-            }
-
-            var song = songs[sourceIndex];
-            songs.RemoveAt(sourceIndex);
-            songs.Insert(targetIndex, song);
-
-            RefreshDataGrid();
-            SaveSongsToFile();
-
-            if (targetIndex < dataGridViewSongs.Rows.Count)
-            {
-                dataGridViewSongs.ClearSelection();
-                dataGridViewSongs.Rows[targetIndex].Selected = true;
+                MessageBox.Show($"Piesa '{title} - {artist}' există deja în listă!", "Atenție", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
-}
+    }
     
